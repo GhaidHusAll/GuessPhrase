@@ -1,7 +1,9 @@
 package com.example.phrasegame
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -25,13 +27,18 @@ class MainActivity : AppCompatActivity() {
     private var guesses = ArrayList<String>()
     private var guesses2 = ArrayList<Int>()
     private var tries = 0
+    private var score = 0
     private var char = ArrayList<Char>()
     var  changedWord = ""
     var guessPhrase = true
 
+    private lateinit var sharedPreferences: SharedPreferences
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPreferences = this.getSharedPreferences(
+            getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        score = sharedPreferences.getInt("highScore", 0)
         tries = 4
         char = arrayListOf()
         setContentView(R.layout.activity_main)
@@ -60,7 +67,9 @@ class MainActivity : AppCompatActivity() {
                     userGuess.hint = "Guess a letter"
 
                 }
-            }else {customAlert("there is no guesses remaining ")}
+            }else { score = 0
+                customAlert("there is no guesses remaining ")
+            }
             userGuess.text.clear()
 
         }
@@ -78,6 +87,7 @@ class MainActivity : AppCompatActivity() {
              // win / end game
              changedWord = theWinningWord
              tvMain.text = changedWord
+             score++
              customAlert("you win the Game")
          }else {
              guesses.add("Wrong Guess $input")
@@ -115,13 +125,20 @@ class MainActivity : AppCompatActivity() {
     private fun checkPhraseComplete(){
         if (!changedWord.contains("★", true)){
             //the phrase is completed
+                score++
             customAlert("you win the Game")
         }
     }
-    private fun endGame(){this.recreate()}
+    private fun endGame(){
+        this.recreate()
+        with(sharedPreferences.edit()) {
+            putInt("highScore", score)
+            apply()
+        }
+    }
     private fun customAlert(title:String){
         val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setMessage("do you want to play again ?:")
+        dialogBuilder.setMessage(" the Highest Score is : ${score} \n do you want to play again ?:")
             .setPositiveButton("Yes", DialogInterface.OnClickListener {
                     _, _ ->  endGame()
             })
