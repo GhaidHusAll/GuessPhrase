@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     userGuess.hint = "Guess a letter"
 
                 }
-            }else { score = 0
+            }else {
                 customAlert("there is no guesses remaining ")
             }
             userGuess.text.clear()
