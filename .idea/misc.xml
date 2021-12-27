@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/androidCODES/phraseGame/app/src/main/res/layout/activity_add.xml" value="0.1609375" />
         <entry key="..\:/androidCODES/phraseGame/app/src/main/res/layout/activity_main.xml" value="0.1766304347826087" />
         <entry key="..\:/androidCODES/phraseGame/app/src/main/res/layout/rows.xml" value="0.1766304347826087" />
+        <entry key="..\:/androidCODES/phraseGame/app/src/main/res/menu/main_menu.xml" value="0.1609375" />
       </map>
     </option>
   </component>
